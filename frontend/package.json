@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "clsx": "^2.0.0",
     "fontfaceobserver": "^2.3.0",
     "next": "13.5.4",
     "phaser": "^3.60.0",
