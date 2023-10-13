@@ -17,6 +17,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   create() {
+    const SCALE = 1.5;
     this.anims.create({
       key: "down",
       frames: this.anims.generateFrameNumbers("pengu", { start: 0, end: 5 }),
@@ -41,21 +42,25 @@ export class MainScene extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
-    const SCALE = 1;
     this.map = this.add.image(0, 0, "map").setOrigin(0, 0);
-    this.pengu = this.physics.add.sprite(11 * SCALE * 32, 4 * SCALE * 32, "pengu");
+    this.pengu = this.physics.add.sprite(
+      11 * SCALE * 32,
+      4 * SCALE * 32,
+      "pengu"
+    );
     this.map.setScale(SCALE);
     this.pengu.setScale(SCALE);
     this.camera = this.cameras.main;
-    this.camera.startFollow(this.pengu, true);
     this.camera.setZoom(2);
-    this.camera.setBounds(0, 0, this.map.width * SCALE, this.map.height * SCALE);
+    this.camera.setBounds(0, 0, window.innerWidth * 2, window.innerHeight * 2);
     this.camera.setDeadzone(0);
+    this.camera.startFollow(this.pengu, true, 0.1, 0.1, -40, -40);
+    window.camera = this.camera;
   }
 
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
-    let moving = false; 
+    let moving = false;
 
     if (cursors.left.isDown) {
       this.pengu.setVelocityX(-SPEED);
@@ -69,7 +74,6 @@ export class MainScene extends Phaser.Scene {
       this.pengu.setVelocityX(0);
     }
 
-    // Handle vertical movement
     if (cursors.up.isDown) {
       this.pengu.setVelocityY(-SPEED);
       this.pengu.anims.play("up", true);
