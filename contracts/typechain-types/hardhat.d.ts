@@ -18,6 +18,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Ownable__factory>;
     getContractFactory(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20__factory>;
+    getContractFactory(
       name: "ERC721",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC721__factory>;
@@ -50,15 +54,24 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
-      name: "TestNFT",
+      name: "Pengumon",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.TestNFT__factory>;
+    ): Promise<Contracts.Pengumon__factory>;
+    getContractFactory(
+      name: "Soul",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Soul__factory>;
 
     getContractAt(
       name: "Ownable",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.Ownable>;
+    getContractAt(
+      name: "IERC20",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20>;
     getContractAt(
       name: "ERC721",
       address: string | ethers.Addressable,
@@ -100,15 +113,24 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
     getContractAt(
-      name: "TestNFT",
+      name: "Pengumon",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
-    ): Promise<Contracts.TestNFT>;
+    ): Promise<Contracts.Pengumon>;
+    getContractAt(
+      name: "Soul",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Soul>;
 
     deployContract(
       name: "Ownable",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Ownable>;
+    deployContract(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20>;
     deployContract(
       name: "ERC721",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -142,15 +164,24 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IERC165>;
     deployContract(
-      name: "TestNFT",
+      name: "Pengumon",
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.TestNFT>;
+    ): Promise<Contracts.Pengumon>;
+    deployContract(
+      name: "Soul",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Soul>;
 
     deployContract(
       name: "Ownable",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Ownable>;
+    deployContract(
+      name: "IERC20",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20>;
     deployContract(
       name: "ERC721",
       args: any[],
@@ -192,10 +223,15 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IERC165>;
     deployContract(
-      name: "TestNFT",
+      name: "Pengumon",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.TestNFT>;
+    ): Promise<Contracts.Pengumon>;
+    deployContract(
+      name: "Soul",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Soul>;
 
     // default types
     getContractFactory(

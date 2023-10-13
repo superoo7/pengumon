@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract TestNFT is ERC721Enumerable, Ownable, ReentrancyGuard {
+contract Pengumon is ERC721Enumerable, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
     using SafeMath for uint256;
 
@@ -66,14 +66,15 @@ contract TestNFT is ERC721Enumerable, Ownable, ReentrancyGuard {
     }
 
     //levelup function
-    function changeLevel(bool up, uint256 tokenId) public {
+    function changeLevel(bool up, uint256 tokenId) public returns (uint256) {
         uint256 currTokenLevel = tokenIdToLevels[tokenId];
         if (up) {
-            currTokenLevel++;
+            tokenIdToLevels[tokenId]++;
         } else {
             require(currTokenLevel > 1, "Minimum level is lvl1.");
-            currTokenLevel--;
+            tokenIdToLevels[tokenId]--;
         }
+        return tokenIdToLevels[tokenId];
     }
 
 

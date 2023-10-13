@@ -7,15 +7,15 @@ import { getImplementationAddress } from '@openzeppelin/upgrades-core';
 async function main() {
   
   const [deployer] = await ethers.getSigners();
-  const Pengumon = await ethers.getContractFactory("Pengumon");
+  const Soul = await ethers.getContractFactory("Soul");
   
 
 
   
 
-  const pengumon = await Pengumon.deploy();
-  await pengumon.waitForDeployment();
-  console.log(pengumon.getAddress())
+  const soul = await Soul.deploy();
+  await soul.waitForDeployment();
+  console.log(soul.getAddress())
 
 
 
