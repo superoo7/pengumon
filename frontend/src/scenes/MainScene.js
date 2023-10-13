@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-const SPEED = 32 * 4;
+const SPEED = 32;
 
 export class MainScene extends Phaser.Scene {
   constructor() {
@@ -8,15 +8,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("map", "game/testmap.png");
-    this.load.spritesheet("pengu", "game/pengu.png", {
-      frameWidth: 32,
-      frameHeight: 32,
-      endFrame: 23,
-    });
-    this.load.on("complete", () => {
-      console.log(this.cache.tilemap.get("boundaries"));
-    });
+    this.load.on("complete", () => {});
   }
 
   create() {
@@ -58,6 +50,13 @@ export class MainScene extends Phaser.Scene {
     this.camera.setBounds(0, 0, window.innerWidth * 2, window.innerHeight * 2);
     this.camera.setDeadzone(0);
     this.camera.startFollow(this.pengu, true, 0.1, 0.1, -40, -40);
+
+    this.birdSound = this.sound.add("birds");
+    this.walkSound = this.sound.add("footstep");
+    this.birdSound.play({
+      loop: true,
+      delay: 5,
+    });
   }
 
   update() {
@@ -67,10 +66,12 @@ export class MainScene extends Phaser.Scene {
     if (cursors.left.isDown) {
       this.pengu.setVelocityX(-SPEED);
       this.pengu.anims.play("left", true);
+      this.playWalkSound();
       moving = true;
     } else if (cursors.right.isDown) {
       this.pengu.setVelocityX(SPEED);
       this.pengu.anims.play("right", true);
+      this.playWalkSound();
       moving = true;
     } else {
       this.pengu.setVelocityX(0);
@@ -79,10 +80,12 @@ export class MainScene extends Phaser.Scene {
     if (cursors.up.isDown) {
       this.pengu.setVelocityY(-SPEED);
       this.pengu.anims.play("up", true);
+      this.playWalkSound();
       moving = true;
     } else if (cursors.down.isDown) {
       this.pengu.setVelocityY(SPEED);
       this.pengu.anims.play("down", true);
+      this.playWalkSound();
       moving = true;
     } else {
       this.pengu.setVelocityY(0);
@@ -90,6 +93,13 @@ export class MainScene extends Phaser.Scene {
 
     if (!moving) {
       this.pengu.anims.stop();
+      this.walkSound.stop();
+    }
+  }
+
+  playWalkSound() {
+    if (!this.walkSound.isPlaying) {
+      this.walkSound.play({ rate: 4, volume: 0.2 });
     }
   }
 }
