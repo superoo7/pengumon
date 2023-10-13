@@ -1,1 +1,3 @@
-.aider.chat.history.md
+contracts/node_modules
+contracts/.env
+/node_modules
