@@ -1,6 +1,7 @@
 import Phaser from "phaser";
+import { boundaries } from "./map/boundaries";
 
-const SPEED = 32;
+const SPEED = 32 * 4;
 
 export class MainScene extends Phaser.Scene {
   constructor() {
@@ -45,18 +46,31 @@ export class MainScene extends Phaser.Scene {
     );
     this.map.setScale(SCALE);
     this.pengu.setScale(SCALE);
+
+    // Set Camera
     this.camera = this.cameras.main;
     this.camera.setZoom(2);
     this.camera.setBounds(0, 0, window.innerWidth * 2, window.innerHeight * 2);
     this.camera.setDeadzone(0);
     this.camera.startFollow(this.pengu, true, 0.1, 0.1, -40, -40);
 
+    // Play Sound
     this.birdSound = this.sound.add("birds");
     this.walkSound = this.sound.add("footstep");
     this.birdSound.play({
       loop: true,
       delay: 5,
     });
+
+    const boundariesTilemap = this.make.tilemap({
+      data: boundaries,
+      tileWidth: 32,
+      tileHeight: 32,
+    });
+    const boundariesLayer = boundariesTilemap.createLayer(0);
+    boundariesLayer.setScale(SCALE);
+    boundariesLayer.setCollisionBetween(1, 1000, true); 
+    this.physics.add.collider(this.pengu, boundariesLayer);
   }
 
   update() {
