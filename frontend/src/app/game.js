@@ -19,6 +19,7 @@ const Game = () => {
       width: window.innerWidth * window.devicePixelRatio,
       height: window.innerHeight * window.devicePixelRatio,
       backgroundColor: "#4eb3e7",
+      pixelArt: true,
       scene: [LoadingScene, MainScene],
       physics: {
         default: 'arcade',
