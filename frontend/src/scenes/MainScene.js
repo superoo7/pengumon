@@ -14,6 +14,9 @@ export class MainScene extends Phaser.Scene {
       frameHeight: 32,
       endFrame: 23,
     });
+    this.load.on("complete", () => {
+      console.log(this.cache.tilemap.get("boundaries"));
+    });
   }
 
   create() {
@@ -55,7 +58,6 @@ export class MainScene extends Phaser.Scene {
     this.camera.setBounds(0, 0, window.innerWidth * 2, window.innerHeight * 2);
     this.camera.setDeadzone(0);
     this.camera.startFollow(this.pengu, true, 0.1, 0.1, -40, -40);
-    window.camera = this.camera;
   }
 
   update() {
