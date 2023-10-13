@@ -43,7 +43,7 @@ export class MainScene extends Phaser.Scene {
     });
     const SCALE = 1;
     this.map = this.add.image(0, 0, "map").setOrigin(0, 0);
-    this.pengu = this.physics.add.sprite(4 * SCALE * 32, 3 * SCALE * 32, "pengu");
+    this.pengu = this.physics.add.sprite(11 * SCALE * 32, 4 * SCALE * 32, "pengu");
     this.map.setScale(SCALE);
     this.pengu.setScale(SCALE);
     this.camera = this.cameras.main;

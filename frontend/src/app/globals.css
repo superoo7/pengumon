@@ -13,12 +13,20 @@
   src: url('../../public/fonts/MetalMania-Regular.ttf') format('truetype');
 }
 
+body {
+  background-color: #000;
+}
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  color: white;
   font-family: "MetalMania";
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "JollyLodger";
 }
 
 /* @font-face {
