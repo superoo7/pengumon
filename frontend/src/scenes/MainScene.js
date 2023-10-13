@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-const SPEED = 32;
+const SPEED = 32 * 4;
 
 export class MainScene extends Phaser.Scene {
   constructor() {
@@ -41,15 +41,22 @@ export class MainScene extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
+    const SCALE = 1;
     this.map = this.add.image(0, 0, "map").setOrigin(0, 0);
-    this.pengu = this.physics.add.sprite(4 * 32, 3 * 32, "pengu");
+    this.pengu = this.physics.add.sprite(4 * SCALE * 32, 3 * SCALE * 32, "pengu");
+    this.map.setScale(SCALE);
+    this.pengu.setScale(SCALE);
+    this.camera = this.cameras.main;
+    this.camera.startFollow(this.pengu, true);
+    this.camera.setZoom(2);
+    this.camera.setBounds(0, 0, this.map.width * SCALE, this.map.height * SCALE);
+    this.camera.setDeadzone(0);
   }
 
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
-    let moving = false; // Variable to track if any movement key is pressed
+    let moving = false; 
 
-    // Handle horizontal movement
     if (cursors.left.isDown) {
       this.pengu.setVelocityX(-SPEED);
       this.pengu.anims.play("left", true);
@@ -75,7 +82,6 @@ export class MainScene extends Phaser.Scene {
       this.pengu.setVelocityY(0);
     }
 
-    // If no movement keys are pressed, stop the animation
     if (!moving) {
       this.pengu.anims.stop();
     }
