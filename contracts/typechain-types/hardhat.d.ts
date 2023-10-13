@@ -18,6 +18,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Ownable__factory>;
     getContractFactory(
+      name: "IERC1271",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC1271__factory>;
+    getContractFactory(
       name: "IERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20__factory>;
@@ -54,6 +58,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
+      name: "PengumonERC6551Account",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PengumonERC6551Account__factory>;
+    getContractFactory(
+      name: "ERC6551Registry",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC6551Registry__factory>;
+    getContractFactory(
       name: "Pengumon",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Pengumon__factory>;
@@ -61,12 +73,29 @@ declare module "hardhat/types/runtime" {
       name: "Soul",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Soul__factory>;
+    getContractFactory(
+      name: "IERC6551Account",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC6551Account__factory>;
+    getContractFactory(
+      name: "IERC6551Executable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC6551Executable__factory>;
+    getContractFactory(
+      name: "IERC6551Registry",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC6551Registry__factory>;
 
     getContractAt(
       name: "Ownable",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.Ownable>;
+    getContractAt(
+      name: "IERC1271",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC1271>;
     getContractAt(
       name: "IERC20",
       address: string | ethers.Addressable,
@@ -113,6 +142,16 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
     getContractAt(
+      name: "PengumonERC6551Account",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PengumonERC6551Account>;
+    getContractAt(
+      name: "ERC6551Registry",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC6551Registry>;
+    getContractAt(
       name: "Pengumon",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -122,11 +161,30 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.Soul>;
+    getContractAt(
+      name: "IERC6551Account",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC6551Account>;
+    getContractAt(
+      name: "IERC6551Executable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC6551Executable>;
+    getContractAt(
+      name: "IERC6551Registry",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC6551Registry>;
 
     deployContract(
       name: "Ownable",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Ownable>;
+    deployContract(
+      name: "IERC1271",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC1271>;
     deployContract(
       name: "IERC20",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -164,6 +222,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IERC165>;
     deployContract(
+      name: "PengumonERC6551Account",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.PengumonERC6551Account>;
+    deployContract(
+      name: "ERC6551Registry",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC6551Registry>;
+    deployContract(
       name: "Pengumon",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Pengumon>;
@@ -171,12 +237,29 @@ declare module "hardhat/types/runtime" {
       name: "Soul",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Soul>;
+    deployContract(
+      name: "IERC6551Account",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC6551Account>;
+    deployContract(
+      name: "IERC6551Executable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC6551Executable>;
+    deployContract(
+      name: "IERC6551Registry",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC6551Registry>;
 
     deployContract(
       name: "Ownable",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Ownable>;
+    deployContract(
+      name: "IERC1271",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC1271>;
     deployContract(
       name: "IERC20",
       args: any[],
@@ -223,6 +306,16 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IERC165>;
     deployContract(
+      name: "PengumonERC6551Account",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.PengumonERC6551Account>;
+    deployContract(
+      name: "ERC6551Registry",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC6551Registry>;
+    deployContract(
       name: "Pengumon",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -232,6 +325,21 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Soul>;
+    deployContract(
+      name: "IERC6551Account",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC6551Account>;
+    deployContract(
+      name: "IERC6551Executable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC6551Executable>;
+    deployContract(
+      name: "IERC6551Registry",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC6551Registry>;
 
     // default types
     getContractFactory(
