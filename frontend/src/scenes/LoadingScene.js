@@ -10,10 +10,7 @@ export class LoadingScene extends Phaser.Scene {
 
   create() {
     this.add.text(400, 300, "Loading...", { color: "#0f0" })
-        // Move to MainScene
-        this.scene.start("MainScene");
-    // setTimeout(() => {
-    // }, 1000)
+    this.scene.start("MainScene");
   }
 
   update() {
