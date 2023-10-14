@@ -5,10 +5,12 @@ import { NavigationButton } from "@/components/NavigationButton";
 import { NameQuestion, Question } from "./questions";
 import { useMintPengu } from "../web3/pengumon";
 import { useRouter } from "next/navigation";
+import { useAccount } from "wagmi";
 
 const randomId = () => Math.floor(Math.random() * 1000000);
 
 const CreatePage = () => {
+  const { isConnected } = useAccount();
   const router = useRouter();
   const { mintPengu } = useMintPengu();
   const introAudio = React.useRef(null);
@@ -94,6 +96,10 @@ const CreatePage = () => {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
+            if (!isConnected) {
+              alert("Please connect your wallet to mint your Wizzy!");
+              return;
+            }
             await mintPengu({
               args: [
                 name,
@@ -109,24 +115,29 @@ const CreatePage = () => {
           className="w-1/2 flex flex-col items-center justify-center"
         >
           <div className="p-4 text-3xl">{summary}</div>
-          {stats && (
-            <div className="flex flex-col">
-              <span>
-                Cuteness: {stats.cuteness}
-              </span>
-              <span>
-                Intelligence: {stats.intelligence}
-              </span>
-              <span>Magic: {stats.magic}</span>
-              <span>
-                Strength: {stats.strength}
-              </span>
-              <span>{stats.reasoning}</span>
-            </div>
+          {stats ? (
+            <>
+              <div className="flex p-4">
+                <div className="flex flex-col w-1/2">
+                  <h5 className="text-3xl pb-4">Wizzy's Stats</h5>
+                  <span className="text-lg">Cuteness: {stats.cuteness}</span>
+                  <span className="text-lg">
+                    Intelligence: {stats.intelligence}
+                  </span>
+                  <span className="text-lg">Magic: {stats.magic}</span>
+                  <span className="text-lg">Strength: {stats.strength}</span>
+                </div>
+                <div className="w-1/2">
+                  <span className="text-lg">{stats.reasoning}</span>
+                </div>
+              </div>
+              <div className="flex pt-4 justify-center">
+                <NavigationButton type="submit" label="Mint your Wizzy" />
+              </div>
+            </>
+          ) : (
+            <div>Finalizing your pengu...</div>
           )}
-          <div className="flex pt-4 justify-center">
-            <NavigationButton type="submit" label="Mint your Wizzy" />
-          </div>
         </form>
       ) : sequence === 0 ? (
         <div className="pt-2">
