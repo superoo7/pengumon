@@ -7,6 +7,9 @@ import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { ConnectWallet } from "@/components/ConnectWallet";
 import { goerli } from "viem/chains";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const client = new QueryClient();
 
 export default function RootLayout({ children }) {
   const { chains, publicClient, webSocketPublicClient } = configureChains(
@@ -32,12 +35,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <WagmiConfig config={config}>
-          <>
-            <ConnectWallet />
-            {children}
-          </>
-        </WagmiConfig>
+        <QueryClientProvider client={client}>
+          <WagmiConfig config={config}>
+            <>
+              <ConnectWallet />
+              {children}
+            </>
+          </WagmiConfig>
+        </QueryClientProvider>
       </body>
     </html>
   );

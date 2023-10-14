@@ -52,7 +52,7 @@ export class MainScene extends Phaser.Scene {
     this.camera.setZoom(2);
     this.camera.setBounds(0, 0, window.innerWidth * 2, window.innerHeight * 2);
     this.camera.setDeadzone(0);
-    this.camera.startFollow(this.pengu, true, 0.1, 0.1, -40, -40);
+    this.camera.startFollow(this.pengu, true, 0.15, 0.15, -80, -80);
 
     // Play Sound
     this.birdSound = this.sound.add("birds");
