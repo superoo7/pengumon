@@ -3,49 +3,34 @@
 import React, { useState, useRef } from "react";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import { NavigationButton } from "../components/NavigationButton";
 
 const scenes = [
   {
-      "text": "",
-      "image": "./scenes/scene0.png"
+    text: "",
+    image: "./scenes/scene0.png",
   },
   {
-      text: `In the whimsical icy domain of The Huddle, our peculiar penguin, felt a magic stirring within, a pull towards a destiny never before embraced by his kin.`,
-      image: "./scenes/scene1.png"
+    text: `In the whimsical icy domain of The Huddle, our peculiar penguin, felt a magic stirring within, a pull towards a destiny never before embraced by his kin.`,
+    image: "./scenes/scene1.png",
   },
   {
-      text: `Venturing into the wilderness, Wizzy collects precious resources, vital for his quest. But nature is unforgiving; every step poses risks, testing his health and determination.`,
-      image: "./scenes/scene2.png"
+    text: `Venturing into the wilderness, Wizzy collects precious resources, vital for his quest. But nature is unforgiving; every step poses risks, testing his health and determination.`,
+    image: "./scenes/scene2.png",
   },
   {
-      text: `By lantern's glow, Wizzy and Pudgy scholars decode ancient runes, seeking the realm's lost magic.`,
-      image: "./scenes/scene3.png"
+    text: `By lantern's glow, Wizzy and Pudgy scholars decode ancient runes, seeking the realm's lost magic.`,
+    image: "./scenes/scene3.png",
   },
   {
-      text: `Shadows grow as rogue penguins cast spells. Wizzy's home, though, remains a beacon of hope.`,
-      image: "./scenes/scene4.png"
+    text: `Shadows grow as rogue penguins cast spells. Wizzy's home, though, remains a beacon of hope.`,
+    image: "./scenes/scene4.png",
   },
   {
-      text: `And so, the tale of Wizzleton Frostbeak unfolds, where magic, camaraderie, and discovery await.`,
-      image: "./scenes/scene5.png"
-  }
-]
-
-export const NavigationButton = ({
-  label,
-  onClick,
-  loading = false,
-  type = "button",
-}) => (
-  <button
-    type={type}
-    disabled={loading}
-    className="text-2xl px-5 py-2.5 mx-2.5 border-none rounded-full bg-gray-800 text-gray-100 cursor-pointer shadow-md transition-transform duration-300 ease-in-out hover:bg-gray-900 hover:shadow-lg hover:-translate-y-1.5 disabled:bg-gray-900"
-    onClick={onClick}
-  >
-    {label}
-  </button>
-);
+    text: `And so, the tale of Wizzleton Frostbeak unfolds, where magic, camaraderie, and discovery await.`,
+    image: "./scenes/scene5.png",
+  },
+];
 
 const HomePage = () => {
   const router = useRouter();
@@ -140,7 +125,11 @@ const HomePage = () => {
                     </h1>
                   </div>
                   <div className="absolute transparent top-[calc(50%_-_60px)] md:top-[calc(50%_-_120px)] left-[calc(50%_-_120px)]">
-                    <img className="w-60 h-60" src="/game/pengu-work.gif" alt="pengu" />
+                    <img
+                      className="w-60 h-60"
+                      src="/game/pengu-work.gif"
+                      alt="pengu"
+                    />
                   </div>
                 </div>
               );

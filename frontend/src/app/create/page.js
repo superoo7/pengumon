@@ -1,45 +1,14 @@
 "use client";
 import React from "react";
-import { useCreatePage } from "./api";
-import { NavigationButton } from "../page";
+import { NO_OF_QUESTIONS, useCreatePage } from "./api";
+import { NavigationButton } from "@/components/NavigationButton";
 import { NameQuestion, Question } from "./questions";
 import { useMintPengu } from "./mint";
 
-export const NO_OF_QUESTIONS = 1;
 const randomId = () => Math.floor(Math.random() * 1000000);
 
-const MintPengu = ({ setSequence }) => {
-  const { mintPengu } = useMintPengu();
-  return (
-    <>
-      <h1 className="text-6xl">Mint your Pengu</h1>
-      <p>Mint your pengu to secure</p>
-      <img className="mt-8 w-32 h-32" src="/game/pengu-walking.gif" />
-      <WizButton
-        onClick={() => {
-          mintPengu();
-          // setSequence(2);
-        }}
-      >
-        Mint Pengu
-      </WizButton>
-    </>
-  );
-};
-
-const SuccessfulScreen = () => {
-  return (
-    <>
-      <h1 className="text-6xl">Create your Wizzy</h1>
-      <img className="mt-8 w-32 h-32" src="/game/pengu-walking.gif" />
-      <WizButton type="button" className="mt-4" onClick={handleCreate}>
-        WAHOOOO
-      </WizButton>
-    </>
-  );
-};
-
 const CreatePage = () => {
+  const { mintPengu } = useMintPengu();
   const introAudio = React.useRef(null);
   const createCompletionAudio = React.useRef(null);
   const [name, setName] = React.useState(`Wizzy${randomId()}`);
@@ -120,7 +89,9 @@ const CreatePage = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            alert("Work in progress!");
+            mintPengu();
+
+            // TODO: Handle redirect after minting
           }}
           className="w-1/2 flex flex-col items-center justify-center"
         >
@@ -128,15 +99,15 @@ const CreatePage = () => {
           {stats && totalPoints && (
             <div className="flex flex-col">
               <span>
-                Cuteness: {Math.round(stats.cuteness / totalPoints * 20)}
+                Cuteness: {Math.round((stats.cuteness / totalPoints) * 20)}
               </span>
               <span>
                 Intelligence:{" "}
-                {Math.round(stats.intelligence / totalPoints * 20)}
+                {Math.round((stats.intelligence / totalPoints) * 20)}
               </span>
-              <span>Magic: {Math.round(stats.magic / totalPoints * 20)}</span>
+              <span>Magic: {Math.round((stats.magic / totalPoints) * 20)}</span>
               <span>
-                Strength: {Math.round(stats.strength / totalPoints * 20)}
+                Strength: {Math.round((stats.strength / totalPoints) * 20)}
               </span>
               <span>{stats.reasoning}</span>
             </div>
