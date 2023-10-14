@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { boundaries } from "./map/boundaries";
 
 const SPEED = 32 * 4;
 
@@ -8,15 +9,11 @@ export class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("map", "game/testmap.png");
-    this.load.spritesheet("pengu", "game/pengu.png", {
-      frameWidth: 32,
-      frameHeight: 32,
-      endFrame: 23,
-    });
+    this.load.on("complete", () => {});
   }
 
   create() {
+    const SCALE = 1.5;
     this.anims.create({
       key: "down",
       frames: this.anims.generateFrameNumbers("pengu", { start: 0, end: 5 }),
@@ -41,42 +38,68 @@ export class MainScene extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
-    const SCALE = 1;
     this.map = this.add.image(0, 0, "map").setOrigin(0, 0);
-    this.pengu = this.physics.add.sprite(11 * SCALE * 32, 4 * SCALE * 32, "pengu");
+    this.pengu = this.physics.add.sprite(
+      11 * SCALE * 32,
+      4 * SCALE * 32,
+      "pengu"
+    );
     this.map.setScale(SCALE);
     this.pengu.setScale(SCALE);
+
+    // Set Camera
     this.camera = this.cameras.main;
-    this.camera.startFollow(this.pengu, true);
     this.camera.setZoom(2);
-    this.camera.setBounds(0, 0, this.map.width * SCALE, this.map.height * SCALE);
+    this.camera.setBounds(0, 0, window.innerWidth * 2, window.innerHeight * 2);
     this.camera.setDeadzone(0);
+    this.camera.startFollow(this.pengu, true, 0.1, 0.1, -40, -40);
+
+    // Play Sound
+    this.birdSound = this.sound.add("birds");
+    this.walkSound = this.sound.add("footstep");
+    this.birdSound.play({
+      loop: true,
+      delay: 5,
+    });
+
+    const boundariesTilemap = this.make.tilemap({
+      data: boundaries,
+      tileWidth: 32,
+      tileHeight: 32,
+    });
+    const boundariesLayer = boundariesTilemap.createLayer(0);
+    boundariesLayer.setScale(SCALE);
+    boundariesLayer.setCollisionBetween(1, 1000, true); 
+    this.physics.add.collider(this.pengu, boundariesLayer);
   }
 
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
-    let moving = false; 
+    let moving = false;
 
     if (cursors.left.isDown) {
       this.pengu.setVelocityX(-SPEED);
       this.pengu.anims.play("left", true);
+      this.playWalkSound();
       moving = true;
     } else if (cursors.right.isDown) {
       this.pengu.setVelocityX(SPEED);
       this.pengu.anims.play("right", true);
+      this.playWalkSound();
       moving = true;
     } else {
       this.pengu.setVelocityX(0);
     }
 
-    // Handle vertical movement
     if (cursors.up.isDown) {
       this.pengu.setVelocityY(-SPEED);
       this.pengu.anims.play("up", true);
+      this.playWalkSound();
       moving = true;
     } else if (cursors.down.isDown) {
       this.pengu.setVelocityY(SPEED);
       this.pengu.anims.play("down", true);
+      this.playWalkSound();
       moving = true;
     } else {
       this.pengu.setVelocityY(0);
@@ -84,6 +107,13 @@ export class MainScene extends Phaser.Scene {
 
     if (!moving) {
       this.pengu.anims.stop();
+      this.walkSound.stop();
+    }
+  }
+
+  playWalkSound() {
+    if (!this.walkSound.isPlaying) {
+      this.walkSound.play({ rate: 4, volume: 0.2 });
     }
   }
 }
