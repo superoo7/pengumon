@@ -3,11 +3,13 @@ import React from "react";
 import { NO_OF_QUESTIONS, useCreatePage } from "./api";
 import { NavigationButton } from "@/components/NavigationButton";
 import { NameQuestion, Question } from "./questions";
-import { useMintPengu } from "./mint";
+import { useMintPengu } from "../web3/pengumon";
+import { useRouter } from "next/navigation";
 
 const randomId = () => Math.floor(Math.random() * 1000000);
 
 const CreatePage = () => {
+  const router = useRouter();
   const { mintPengu } = useMintPengu();
   const introAudio = React.useRef(null);
   const createCompletionAudio = React.useRef(null);
@@ -25,7 +27,6 @@ const CreatePage = () => {
   const [answersChoices, setAnswersChoices] = React.useState([]);
   const [summary, setSummary] = React.useState("");
   const [stats, setStats] = React.useState(null);
-  const [totalPoints, setTotalPoints] = React.useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,11 +41,15 @@ const CreatePage = () => {
       setSummary(content);
       const statsResponse = await statsGenerator({ summary: content });
       const temp = JSON.parse(statsResponse.content);
-      setStats(temp);
-      const tempTotalPoints =
+      const totalPoints =
         temp.cuteness + temp.intelligence + temp.magic + temp.strength;
-      console.log(tempTotalPoints);
-      setTotalPoints(tempTotalPoints);
+      setStats({
+        cuteness: Math.round((temp.cuteness / totalPoints) * 20),
+        intelligence: Math.round((temp.intelligence / totalPoints) * 20),
+        magic: Math.round((temp.magic / totalPoints) * 20),
+        strength: Math.round((temp.strength / totalPoints) * 20),
+        reasoning: temp.reasoning,
+      });
       setLoading(false);
       setSequence((s) => s + 1);
       if (createCompletionAudio.current) createCompletionAudio.current.play();
@@ -87,27 +92,34 @@ const CreatePage = () => {
       <img className="mt-8 w-32 h-32" src="/game/pengu-walking.gif" />
       {summary ? (
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            mintPengu();
-
-            // TODO: Handle redirect after minting
+            await mintPengu({
+              args: [
+                name,
+                Number(stats.cuteness),
+                Number(stats.intelligence),
+                Number(stats.magic),
+                Number(stats.strength),
+              ],
+            });
+            createCompletionAudio.current.play();
+            router.push("/game");
           }}
           className="w-1/2 flex flex-col items-center justify-center"
         >
           <div className="p-4 text-3xl">{summary}</div>
-          {stats && totalPoints && (
+          {stats && (
             <div className="flex flex-col">
               <span>
-                Cuteness: {Math.round((stats.cuteness / totalPoints) * 20)}
+                Cuteness: {stats.cuteness}
               </span>
               <span>
-                Intelligence:{" "}
-                {Math.round((stats.intelligence / totalPoints) * 20)}
+                Intelligence: {stats.intelligence}
               </span>
-              <span>Magic: {Math.round((stats.magic / totalPoints) * 20)}</span>
+              <span>Magic: {stats.magic}</span>
               <span>
-                Strength: {Math.round((stats.strength / totalPoints) * 20)}
+                Strength: {stats.strength}
               </span>
               <span>{stats.reasoning}</span>
             </div>
