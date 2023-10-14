@@ -26,6 +26,11 @@ export class LoadingScene extends Phaser.Scene {
     this.load.image("map", "game/testmap.png");
     this.load.audio("birds", "game/Retro Birds 07.wav");
     this.load.audio("footstep", "game/Retro FootStep Mud 01.wav");
+    this.load.spritesheet("pengu-action", "game/pengu-action.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+      endFrame: 30,
+    });
 
     // Track Progress
     this.load.on("progress", function (value) {
