@@ -7,6 +7,9 @@ const CreatePage = () => {
 
   const [sequence, setSequence] = React.useState(0);
   const {mintPengu} = useMintPengu();
+  // const {mintPengu} = () => {
+  //   setSequence(2);
+  // }
 
   const introAudio = React.useRef(null);
   const createCompletionAudio = React.useRef(null);
@@ -35,17 +38,23 @@ const CreatePage = () => {
             Create
           </WizButton>
         </>
-      ) : (
+      ) : sequence === 1 ? (<>
+        <h1 className="text-6xl">Mint your Pengu</h1>
+        <p>Mint your pengu to secure</p>
+        <img className="mt-8 w-32 h-32" src="/game/pengu-walking.gif" />
+        <WizButton onClick={() => { mintPengu(); setSequence(2);}}>
+          Mint Pengu
+        </WizButton>
+      </>)
+      :
+      (
         <>
-          <h1 className="text-6xl">Mint your Pengu</h1>
-          <p>Mint your pengu to secure</p>
-          <img className="mt-8 w-32 h-32" src="/game/pengu-walking.gif" />
-          <WizButton onClick={() => {
-            mintPengu();
-          }}>
-            Mint Pengu
-          </WizButton>
-        </>
+        <h1 className="text-6xl">Create your Wizzy</h1>
+        <img className="mt-8 w-32 h-32" src="/game/pengu-walking.gif" />
+        <WizButton type="button" className="mt-4" onClick={handleCreate}>
+          WAHOOOO
+        </WizButton>
+      </>
       )}
     </div>
   );
