@@ -39,9 +39,10 @@ export class MainScene extends Phaser.Scene {
       repeat: -1,
     });
     this.map = this.add.image(0, 0, "map").setOrigin(0, 0);
+    const spawn = {x: 14, y:11}
     this.pengu = this.physics.add.sprite(
-      11 * SCALE * 32,
-      4 * SCALE * 32,
+      spawn.x * SCALE * 32,
+      spawn.y * SCALE * 32,
       "pengu"
     );
     this.map.setScale(SCALE);

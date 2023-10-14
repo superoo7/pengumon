@@ -109,7 +109,6 @@ const CreatePage = () => {
                 Number(stats.strength),
               ],
             });
-            createCompletionAudio.current.play();
             router.push("/game");
           }}
           className="w-1/2 flex flex-col items-center justify-center"
