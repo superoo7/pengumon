@@ -1,4 +1,4 @@
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useNetwork } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 
 const emojis = [
@@ -30,14 +30,21 @@ function mulberry32(a) {
 
 export const ConnectWallet = () => {
   const { address, isConnected } = useAccount();
+  const { chain } = useNetwork();
+
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
   const { disconnect } = useDisconnect();
 
+
   return (
     <div className="absolute top-5 right-5">
-      {isConnected ? (
+      {
+        (chain && chain.id !== 5001) ? <div className="p-2 bg-gradient-to-br from-red-400 to-pink-600 ">Wrong Chain</div>
+        :
+
+      isConnected ? (
         <button
           onClick={() => {
             const result = confirm("Are you sure you want to disconnect?");

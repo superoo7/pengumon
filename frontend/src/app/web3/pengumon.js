@@ -1,7 +1,7 @@
 import React from "react";
 import { useContractWrite, useContractRead, useAccount } from "wagmi";
 
-const CONTRACT_ADDRESS = "0x8d996BeF15814F025064BE83590587dACC33e77D";
+const CONTRACT_ADDRESS = "0x687A92D123130d79c098ca3bC906718100698a36";
 const PENGUMON_ABI_JSON = require("../create/pengumon.abi.json");
 
 export const useMintPengu = () => {

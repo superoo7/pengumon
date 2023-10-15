@@ -7,7 +7,26 @@ import FontFaceObserver from "fontfaceobserver";
 import { usePengumonAction } from "../web3/pengumon";
 
 const Game = () => {
-  const { sleep, wilderness, refetchLastData, lastChangeStats } = usePengumonAction();
+  const { sleep, wilderness, refetchLastData, lastChangeStats } =
+    usePengumonAction();
+
+  const counter = React.useRef(0);
+
+  React.useEffect(() => {
+    if (counter.current < 2) {
+      counter.current++;
+    } else {
+      alert(
+        `Your pengumon's stats have changed: 
+      Cuteness: ${lastChangeStats[0].toString()}
+      Intelligence: ${lastChangeStats[1].toString()}
+      Magic: ${lastChangeStats[2].toString()}
+      Strength: ${lastChangeStats[3].toString()}
+      Health: ${lastChangeStats[4].toString()}
+      Soul: ${lastChangeStats[5].toString()}` 
+      );
+    }
+  }, [lastChangeStats]);
 
   React.useEffect(() => {
     window.penguSleep = async () => {
@@ -15,22 +34,6 @@ const Game = () => {
       if (c) {
         await sleep();
         await refetchLastData();
-        alert(
-          `Your pengumon's stats have changed: 
-          Cuteness: ${
-            lastChangeStats[0].toString()
-          }
-          Intelligence: ${
-            lastChangeStats[1].toString()
-          }
-          Magic: ${
-            lastChangeStats[2].toString()
-          }
-          Strength: ${
-            lastChangeStats[3].toString()
-          }
-          Health: ${lastChangeStats[4].toString()}`
-        );
       }
     };
     window.penguWilderness = async () => {
@@ -40,24 +43,8 @@ const Game = () => {
       if (c) {
         await wilderness();
         await refetchLastData();
-        alert(
-          `Your pengumon's stats have changed: 
-          Cuteness: ${
-            lastChangeStats[0].toString()
-          }
-          Intelligence: ${
-            lastChangeStats[1].toString()
-          }
-          Magic: ${
-            lastChangeStats[2].toString()
-          }
-          Strength: ${
-            lastChangeStats[3].toString()
-          }
-          Health: ${lastChangeStats[4].toString()}`
-        );
       }
-    }
+    };
   }, [sleep, wilderness]);
 
   React.useEffect(() => {
@@ -75,8 +62,8 @@ const Game = () => {
 
     const config = {
       type: Phaser.AUTO,
-      width: window.innerWidth * window.devicePixelRatio,
-      height: window.innerHeight * window.devicePixelRatio,
+      width: window.innerWidth,
+      height: window.innerHeight,
       backgroundColor: "#4eb3e7",
       pixelArt: true,
       scene: [LoadingScene, MainScene],

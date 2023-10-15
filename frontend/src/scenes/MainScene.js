@@ -109,6 +109,13 @@ export class MainScene extends Phaser.Scene {
     }
   };
 
+  stopAnimation() {
+    this.pengu.anims.stop();
+    this.walkSound.stop();
+    this.pengu.setVelocityX(0);
+    this.pengu.setVelocityY(0);
+  }
+
   update() {
     if (
       !this.enteredHomeLayer &&
@@ -117,8 +124,7 @@ export class MainScene extends Phaser.Scene {
         this.home.getBounds()
       )
     ) {
-      this.pengu.anims.stop();
-      this.walkSound.stop();
+      this.stopAnimation();
       this.onEnterHomeLayer();
       return;
     } else if (
@@ -128,8 +134,7 @@ export class MainScene extends Phaser.Scene {
         this.wilderness.getBounds()
       )
     ) {
-      this.pengu.anims.stop();
-      this.walkSound.stop();
+      this.stopAnimation();
       this.onEnterWildernessLayer();
       return;
     }

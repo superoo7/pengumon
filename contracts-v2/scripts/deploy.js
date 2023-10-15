@@ -8,8 +8,9 @@ async function main() {
   console.log('Getting contract factory...');
   const Pengumon = await ethers.getContractFactory("Pengumon");
   console.log('Deploying contract...');
-  const pengumon = await Pengumon.deploy();
-  await pengumon.deployed();
+  const pengumon = await Pengumon.deploy({
+    gasLimit: "0x1000000",
+  });
   console.log('Contract deployed to:', pengumon.address);
 }
 

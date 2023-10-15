@@ -6,14 +6,16 @@ import { publicProvider } from "wagmi/providers/public";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { ConnectWallet } from "@/components/ConnectWallet";
-import { goerli } from "viem/chains";
+import { mantleTestnet } from "viem/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const client = new QueryClient();
 
 export default function RootLayout({ children }) {
   const { chains, publicClient, webSocketPublicClient } = configureChains(
-    [goerli],
+    [
+      mantleTestnet
+    ],
     [publicProvider()]
   );
 

@@ -3,6 +3,9 @@ import { usePengumonStats } from "@/app/web3/pengumon";
 export const Stats = () => {
   const { pengumonId, pengumon, lastData } = usePengumonStats();
 
+  if(pengumonId === undefined || pengumon === undefined || lastData === undefined) {
+    return undefined;
+  }
   return (
     <>
       <div className="absolute top-5 left-5 bg-white border-2 border-black z-100 p-2">

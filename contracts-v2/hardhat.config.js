@@ -23,6 +23,14 @@ module.exports = {
         `0x${process.env.GOERLI_PRIVATE_KEY}`
       ],
       allowUnlimitedContractSize: true,
+    },
+    "mantle-testnet": {
+      url: "https://rpc.testnet.mantle.xyz/",
+      network_id: 5001,
+      accounts: [
+        `0x${process.env.GOERLI_PRIVATE_KEY}`
+      ],
+      allowUnlimitedContractSize: true,
     }
   },
   etherscan: {
