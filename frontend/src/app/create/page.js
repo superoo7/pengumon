@@ -118,7 +118,7 @@ const CreatePage = () => {
             <>
               <div className="flex p-4">
                 <div className="flex flex-col w-1/2">
-                  <h5 className="text-3xl pb-4">Wizzy's Stats</h5>
+                  <h5 className="text-3xl pb-4">Wizzy&apos;s Stats</h5>
                   <span className="text-lg">Cuteness: {stats.cuteness}</span>
                   <span className="text-lg">
                     Intelligence: {stats.intelligence}

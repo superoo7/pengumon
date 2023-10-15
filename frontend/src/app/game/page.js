@@ -24,7 +24,7 @@ const HomePage = () => {
     return (
       <div className="flex flex-col justify-center items-center h-screen">
         <h1 className="text-4xl md:text-8xl py-8 text-center">
-          You don't have Wizzy NFT
+          You don&apos;t have Wizzy NFT
         </h1>
         <Link className="text-2xl" href="/create">
           Create it here
