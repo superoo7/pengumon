@@ -54,7 +54,7 @@ export class LoadingScene extends Phaser.Scene {
       .text(width / 2, height / 2 + 120, "Loading...", {
         color: "#fff",
         fontSize: "32px",
-        fontFamily: "MetalMania",
+        fontFamily: "JollyLodger",
       })
       .setOrigin(0.5, 0.5);
   }

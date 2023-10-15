@@ -41,20 +41,27 @@ const CreatePage = () => {
       const response = await summaryGenerator({ name, questions, answers });
       const content = response.content;
       setSummary(content);
-      const statsResponse = await statsGenerator({ summary: content });
-      const temp = JSON.parse(statsResponse.content);
-      const totalPoints =
-        temp.cuteness + temp.intelligence + temp.magic + temp.strength;
-      setStats({
-        cuteness: Math.round((temp.cuteness / totalPoints) * 20),
-        intelligence: Math.round((temp.intelligence / totalPoints) * 20),
-        magic: Math.round((temp.magic / totalPoints) * 20),
-        strength: Math.round((temp.strength / totalPoints) * 20),
-        reasoning: temp.reasoning,
-      });
-      setLoading(false);
-      setSequence((s) => s + 1);
-      if (createCompletionAudio.current) createCompletionAudio.current.play();
+      const statsGenerate = async () => {
+        const statsResponse = await statsGenerator({ summary: content });
+        const temp = JSON.parse(statsResponse.content);
+        const totalPoints =
+          temp.cuteness + temp.intelligence + temp.magic + temp.strength;
+        setStats({
+          cuteness: Math.round((temp.cuteness / totalPoints) * 20),
+          intelligence: Math.round((temp.intelligence / totalPoints) * 20),
+          magic: Math.round((temp.magic / totalPoints) * 20),
+          strength: Math.round((temp.strength / totalPoints) * 20),
+          reasoning: temp.reasoning,
+        });
+        setLoading(false);
+        setSequence((s) => s + 1);
+        if (createCompletionAudio.current) createCompletionAudio.current.play();
+      };
+      try {
+        await statsGenerate();
+      } catch (err) {
+        await statsGenerate();
+      }
     } else if (sequence === questions.length + 1) {
       setLoading(true);
       const response = await interviewQuestionGenerator({

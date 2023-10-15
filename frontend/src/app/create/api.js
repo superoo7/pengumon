@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-export const NO_OF_QUESTIONS = 5;
+export const NO_OF_QUESTIONS = 2;
 
 export const getPrompt = (id, input) => {
   return fetch("https://pms.chasm.net/api/prompts/execute/" + id, {
