@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { boundaries } from "./map/boundaries";
+import { home } from "./map/home";
 
 const SPEED = 32 * 4;
 
@@ -39,7 +40,7 @@ export class MainScene extends Phaser.Scene {
       repeat: -1,
     });
     this.map = this.add.image(0, 0, "map").setOrigin(0, 0);
-    const spawn = {x: 14, y:11}
+    const spawn = { x: 14, y: 13 };
     this.pengu = this.physics.add.sprite(
       spawn.x * SCALE * 32,
       spawn.y * SCALE * 32,
@@ -63,6 +64,7 @@ export class MainScene extends Phaser.Scene {
       delay: 5,
     });
 
+    // Load boundaries
     const boundariesTilemap = this.make.tilemap({
       data: boundaries,
       tileWidth: 32,
@@ -70,11 +72,69 @@ export class MainScene extends Phaser.Scene {
     });
     const boundariesLayer = boundariesTilemap.createLayer(0);
     boundariesLayer.setScale(SCALE);
-    boundariesLayer.setCollisionBetween(1, 1000, true); 
+    boundariesLayer.setCollisionBetween(1, 1000, true);
     this.physics.add.collider(this.pengu, boundariesLayer);
+    // Home
+    this.home = this.add.rectangle(
+      spawn.x * 32 * SCALE,
+      (spawn.y - 2) * 32 * SCALE,
+      32,
+      32,
+      0xff0000
+    );
+    this.home.setOrigin(0.5, 0.5);
+
+    // Wilderness
+    this.wilderness = this.add.rectangle(
+      24 * 32 * SCALE,
+      13 * 32 * SCALE,
+      32,
+      32,
+      0x00ff00
+    );
+    this.wilderness.setOrigin(0.5, 0.5);
   }
 
+  onEnterHomeLayer = async () => {
+    if (!this.enteredHomeLayer) {
+      this.enteredHomeLayer = true;
+      await window.penguSleep();
+    }
+  };
+
+  onEnterWildernessLayer = async () => {
+    if (!this.enteredWildernessLayer) {
+      this.enteredWildernessLayer = true;
+      await window.penguWilderness();
+    }
+  };
+
   update() {
+    if (
+      !this.enteredHomeLayer &&
+      Phaser.Geom.Intersects.RectangleToRectangle(
+        this.pengu.getBounds(),
+        this.home.getBounds()
+      )
+    ) {
+      this.pengu.anims.stop();
+      this.walkSound.stop();
+      this.onEnterHomeLayer();
+      return;
+    } else if (
+      !this.enteredWildernessLayer &&
+      Phaser.Geom.Intersects.RectangleToRectangle(
+        this.pengu.getBounds(),
+        this.wilderness.getBounds()
+      )
+    ) {
+      this.pengu.anims.stop();
+      this.walkSound.stop();
+      this.onEnterWildernessLayer();
+      return;
+    }
+
+    // Keyboard
     const cursors = this.input.keyboard.createCursorKeys();
     let moving = false;
 

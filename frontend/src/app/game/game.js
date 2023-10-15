@@ -4,8 +4,62 @@ import Phaser from "phaser";
 import { MainScene } from "@/scenes/MainScene";
 import { LoadingScene } from "@/scenes/LoadingScene";
 import FontFaceObserver from "fontfaceobserver";
+import { usePengumonAction } from "../web3/pengumon";
 
 const Game = () => {
+  const { sleep, wilderness, refetchLastData, lastChangeStats } = usePengumonAction();
+
+  React.useEffect(() => {
+    window.penguSleep = async () => {
+      let c = confirm("Are you sure you want to put your pengumon to sleep?");
+      if (c) {
+        await sleep();
+        await refetchLastData();
+        alert(
+          `Your pengumon's stats have changed: 
+          Cuteness: ${
+            lastChangeStats[0].toString()
+          }
+          Intelligence: ${
+            lastChangeStats[1].toString()
+          }
+          Magic: ${
+            lastChangeStats[2].toString()
+          }
+          Strength: ${
+            lastChangeStats[3].toString()
+          }
+          Health: ${lastChangeStats[4].toString()}`
+        );
+      }
+    };
+    window.penguWilderness = async () => {
+      let c = confirm(
+        "Are you sure you want to put your pengumon in the wilderness?"
+      );
+      if (c) {
+        await wilderness();
+        await refetchLastData();
+        alert(
+          `Your pengumon's stats have changed: 
+          Cuteness: ${
+            lastChangeStats[0].toString()
+          }
+          Intelligence: ${
+            lastChangeStats[1].toString()
+          }
+          Magic: ${
+            lastChangeStats[2].toString()
+          }
+          Strength: ${
+            lastChangeStats[3].toString()
+          }
+          Health: ${lastChangeStats[4].toString()}`
+        );
+      }
+    }
+  }, [sleep, wilderness]);
+
   React.useEffect(() => {
     const font1 = new FontFaceObserver("JollyLodger");
     const font2 = new FontFaceObserver("MetalMania");

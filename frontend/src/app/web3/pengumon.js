@@ -1,3 +1,4 @@
+import React from "react";
 import { useContractWrite, useContractRead, useAccount } from "wagmi";
 
 const CONTRACT_ADDRESS = "0x8d996BeF15814F025064BE83590587dACC33e77D";
@@ -16,46 +17,82 @@ export const useMintPengu = () => {
 };
 
 export const usePengumon = () => {
-  const { address } = useAccount()
+  const { address } = useAccount();
 
-  const {
-    data
-  } = useContractRead({
+  const { data } = useContractRead({
     address: CONTRACT_ADDRESS,
     abi: PENGUMON_ABI_JSON,
     functionName: "balanceOf",
-    args: [address]
+    args: [address],
   });
 
   return {
     hasUserMinted: data && data > 0,
-  }
+  };
 };
 
 export const usePengumonStats = () => {
-  const { address } = useAccount()
+  const { address } = useAccount();
 
-  const {
-    data: pengumonId
-  } = useContractRead({
+  const { data: pengumonId } = useContractRead({
     address: CONTRACT_ADDRESS,
     abi: PENGUMON_ABI_JSON,
     functionName: "tokenOfOwnerByIndex",
-    args: [address, 0]
+    args: [address, 0],
   });
-  const {
-    data
-  } = useContractRead({
+  const { data, refetch } = useContractRead({
     address: CONTRACT_ADDRESS,
     abi: PENGUMON_ABI_JSON,
     functionName: "getPengumon",
-    args: [pengumonId]
+    args: [pengumonId],
   });
+  const { data: lastData, refetch: refetchLastData } = useContractRead({
+    address: CONTRACT_ADDRESS,
+    abi: PENGUMON_ABI_JSON,
+    functionName: "tokenIdToLastChangeStats",
+    args: [pengumonId],
+  });
+  console.log(lastData)
 
-  console.log({ pengumonId, data })
+  React.useEffect(() => {
+    const id = setInterval(() => {
+      refetch();
+      refetchLastData();
+    }, 2000);
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
 
   return {
     pengumonId,
     pengumon: data,
-  }
-}
+    lastData,
+    refetchLastData
+  };
+};
+
+export const usePengumonAction = () => {
+  const { pengumonId, lastData, refetchLastData } = usePengumonStats();
+
+
+  const { writeAsync: sleep } = useContractWrite({
+    address: CONTRACT_ADDRESS,
+    abi: PENGUMON_ABI_JSON,
+    functionName: "penguSleep",
+    args: [pengumonId],
+  });
+  const { writeAsync: wilderness } = useContractWrite({
+    address: CONTRACT_ADDRESS,
+    abi: PENGUMON_ABI_JSON,
+    functionName: "penguWilderness",
+    args: [pengumonId],
+  });
+
+  return {
+    sleep,
+    wilderness,
+    refetchLastData: refetchLastData,
+    lastChangeStats: lastData,
+  };
+};
